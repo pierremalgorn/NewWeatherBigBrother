@@ -1,0 +1,18 @@
+@charset "utf-8";
+
+body {
+	font-family: "Titillium Web", sans-serif;
+	font-weight: normal;
+}
+
+.active-menu {
+	background-color: #4e4e4e;
+	content: '.';
+	display: block;
+	height: 5px;
+	left: 0;
+	top: 0;
+	transition: all .5 linear;
+	width: 1%;
+	z-index: 9;
+}
