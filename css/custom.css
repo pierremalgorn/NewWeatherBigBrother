@@ -16,3 +16,41 @@ body {
 	width: 1%;
 	z-index: 9;
 }
+
+.navbar {
+    margin: 0px
+}
+
+#baseCarte {
+    position: relative;
+    width: 100%;
+}
+
+#baseCarte img {
+    z-index: 0;
+    width: 100%;
+}
+
+.pointVille {
+    z-index: 1;
+    position: absolute;
+    width: 0; 
+    height: 0; 
+    border-color: red; 
+    border-radius: 50%;
+    border-style: solid; 
+    border-width: 5px; 
+    transition : border-width 0.3s, margin-top 0.3s, margin-left 0.3s;
+ }
+
+.pointVille:hover {
+    border-width : 20px;
+    margin-top: -15px;
+    margin-left: -15px
+}
+
+.hover {
+    border-width : 20px;
+    margin-top: -15px;
+    margin-left: -15px
+}

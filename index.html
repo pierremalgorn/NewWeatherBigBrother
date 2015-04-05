@@ -1,15 +1,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="WeatherBigBrother">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NewWeatherBigBrother</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
-    <title>NewWeatherBigBrother</title>
+    
 </head>
 
-<body>
+<body ng-controller="MapController">
 
     <nav class="navbar navbar-default">
     	<div class="container-fluid">
@@ -21,12 +22,55 @@
             <div class="row"><div class="col-sm-2 active-menu"></div></div>
         </div>
     </nav>
+    
+    <div class="slide" id="baseCarte">
+        <img src ="images/MAPOK.jpg" />
+        <div ng-repeat="point in points" ng-click="getWeatherForCity(point.city);" class="pointVille" style="top: {{point.top}}%; left: {{point.left}}%;"></div>
+    </div>
+    
+<!-- Modal -->
+<div class="modal fade" id="modalWeatherForCity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">{{cityWeather.name}}</h4>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-lg-2">
+                <img ng-src="http://openweathermap.org/img/w/{{cityWeather.weather[0].icon}}.png"  /> 
+              </div>
+              <div class="col-lg-4">
+                    {{cityWeather.weather[0].description}}
+              </div>
+              <div class="col-lg-4">
+                  Wind force : {{toKMH(cityWeather.wind.speed);}} km/h 
+              </div>
+              <div class="col-lg-2">
+                  <img id="windDirection" src="./images/wind.png" />
+              </div>
+          </div>
+          <div class="row">
+              Temperature : {{toCelsius(cityWeather.main.temp);}} °C
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info moreInfo">More Info about {{cityWeather.name}}</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    
 
 </body>
 
-	<script src="js/jquery-2.1.3.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-    <script src="js/custom.js"></script>
+<script src="libs/jquery-2.1.3.min.js"></script>
+<script src="libs/angular.min.js"></script>    
+<script src="libs/jquery-ui.min.js"></script>
+<script src="libs/bootstrap.min.js"></script>
+<script src="js/custom.js"></script>
+<script src="js/angularScripts.js"></script>
 
 </html>
