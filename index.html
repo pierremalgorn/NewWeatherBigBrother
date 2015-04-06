@@ -14,18 +14,36 @@
 
     <nav class="navbar navbar-default">
     	<div class="container-fluid">
-       		<ul class="nav navbar-nav col-md-12">
-                <li data-slide="0" class="active"><a href=#><span class="glyphicon glyphicon-home"></span> Home</a></li>
-                <li data-slide="1"><a href=#><span class="glyphicon glyphicon-thumbs-up"></span> About Us</a></li>
-                <li data-slide="2"><a href=#><span class="glyphicon glyphicon-envelope"></span> Contact</a></li>
-            </ul>
-            <div class="row"><div class="col-sm-2 active-menu"></div></div>
+        
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-1">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#"><img src="images/favicon.png" /></a>
+        	</div>
+            <div class="collapse navbar-collapse" id="navbar-1">	
+                <ul class="nav navbar-nav">
+                    <li data-slider="0" class="active"><a href=#><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                    <li data-slider="1"><a href=#><span class="glyphicon glyphicon-thumbs-up"></span> About Us</a></li>
+                    <li data-slider="2"><a href=#><span class="glyphicon glyphicon-envelope"></span> Contact</a></li>
+                </ul>
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                      <input ng-blur="getWeatherForCityTyped();" id="cityAutocomplete" type="text" placeholder="Ville..." class="form-control">
+                    </div>
+                </form>
+                <div class="row col-sm-12"><div class="active-menu"></div></div>
+            </div>    
         </div>
     </nav>
     
-    <div class="slide" id="baseCarte">
-        <img src ="images/MAPOK.jpg" />
-        <div ng-repeat="point in points" ng-click="getWeatherForCity(point.city);" class="pointVille" style="top: {{point.top}}%; left: {{point.left}}%;"></div>
+    <div id="slider">
+        <div class="pageSlide" id="baseCarte">
+            <img src ="images/MAPOK.jpg" />
+            <div ng-repeat="point in points" ng-click="getWeatherForCity(point.city);" class="pointVille" style="top: {{point.top}}%; left: {{point.left}}%;"></div>
+        </div>
     </div>
     
 <!-- Modal -->
@@ -48,7 +66,7 @@
                   Wind force : {{toKMH(cityWeather.wind.speed);}} km/h 
               </div>
               <div class="col-lg-2">
-                  <img id="windDirection" src="./images/wind.png" />
+                  <img id="windDirection" src="images/wind.png" />
               </div>
           </div>
           <div class="row">
@@ -70,6 +88,7 @@
 <script src="libs/angular.min.js"></script>    
 <script src="libs/jquery-ui.min.js"></script>
 <script src="libs/bootstrap.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script src="js/custom.js"></script>
 <script src="js/angularScripts.js"></script>
 

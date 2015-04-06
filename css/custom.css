@@ -3,6 +3,7 @@
 body {
 	font-family: "Titillium Web", sans-serif;
 	font-weight: normal;
+	overflow-x: hidden;
 }
 
 .active-menu {
@@ -21,9 +22,14 @@ body {
     margin: 0px
 }
 
+.navbar-brand > img {
+    margin-top: -10px;
+	height: 40px;
+}
+
 #baseCarte {
     position: relative;
-    width: 100%;
+    width: 100vw;
 }
 
 #baseCarte img {
@@ -53,4 +59,8 @@ body {
     border-width : 20px;
     margin-top: -15px;
     margin-left: -15px
+}
+
+#slider {
+	width:5000px;
 }

@@ -1,4 +1,4 @@
-var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapController', function($scope, $http){
+var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapController', function($scope, $http, $timeout){
     
     
     $scope.points = [
@@ -20,9 +20,9 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         });
         $('#modalWeatherForCity').modal('show');
     }
+	
     
     $scope.getWeatherForCity = function(city){
-        console.log(city);
         $http.get('http://api.openweathermap.org/data/2.5/weather?q='+city)
             .success(function(data){
                  $scope.cityWeather = data;
@@ -33,6 +33,15 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
                  $scope.cityWeather = data;
         })
     };
+	
+	$scope.getWeatherForCityTyped = function(){
+		var city;
+		$timeout(function(){
+			city = document.getElementById("cityAutocomplete").value;
+			$scope.getWeatherForCity(city);
+		}, 3);
+	}
+	
     
     $scope.toCelsius = function(temp) {
         return (temp - 272.15).toFixed(1);
