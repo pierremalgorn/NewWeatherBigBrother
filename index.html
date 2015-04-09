@@ -46,7 +46,7 @@
         </div>
     </div>
     
-<!-- Modal -->
+<!-- Modal general informations -->
 <div class="modal fade" id="modalWeatherForCity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -74,7 +74,42 @@
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-info moreInfo">More Info about {{cityWeather.name}}</button>
+        <button type="button" class="btn btn-info moreInfo" ng-click="furtherInformations(cityWeather.name);">More Info about {{cityWeather.name}}</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal further informations-->
+<div class="modal fade" id="modalWeatherFurtherInformations" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">{{cityWeather.name}}</h4>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-lg-2">
+                <img ng-src="http://openweathermap.org/img/w/{{cityWeather.weather[0].icon}}.png"  /> 
+              </div>
+              <div class="col-lg-4">
+                    {{cityWeather.weather[0].description}}
+              </div>
+              <div class="col-lg-4">
+                  Wind force : {{toKMH(cityWeather.wind.speed);}} km/h 
+              </div>
+              <div class="col-lg-2">
+                  <img id="windDirection" src="images/wind.png" />
+              </div>
+          </div>
+          <div class="row">
+              Temperature : {{toCelsius(cityWeather.main.temp);}} °C
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info moreInfo" ng-click="furtherInformations(point.city);">More Info about {{cityWeather.name}}</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>

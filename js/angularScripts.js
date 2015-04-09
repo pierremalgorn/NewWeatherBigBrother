@@ -20,9 +20,21 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         });
         $('#modalWeatherForCity').modal('show');
     }
+
+    var displayFurtherInformationsWeather = function() {
+        var deg = $scope.cityWeather.wind.deg;
+        $('#modalWeatherForCity').modal('hide');
+        $('#windDirection').css({
+            '-ms-transform': 'rotate('+deg+'deg)',
+            '-webkit-transform': 'rotate('+deg+'deg)',
+            '-transform': 'rotate('+deg+'deg)' 
+        });
+        $('#modalWeatherFurtherInformations').modal('show');
+    }
 	
     
     $scope.getWeatherForCity = function(city){
+        console.log(city);
         $http.get('http://api.openweathermap.org/data/2.5/weather?q='+city)
             .success(function(data){
                  $scope.cityWeather = data;
@@ -41,6 +53,19 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
 			$scope.getWeatherForCity(city);
 		}, 3);
 	}
+
+    $scope.furtherInformations = function(city){
+        console.log(city);
+        $http.get('http://api.openweathermap.org/data/2.5/weather?q='+city)
+            .success(function(data){
+                 $scope.cityWeather = data;   
+                 displayFurtherInformationsWeather();
+        })
+            .error(function(data){
+                //GERER L'ERREUR ???
+                 $scope.cityWeather = data;
+        })
+    }
 	
     
     $scope.toCelsius = function(temp) {
