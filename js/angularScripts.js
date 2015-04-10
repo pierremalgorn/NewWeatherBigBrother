@@ -9,6 +9,8 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
       ];
     
     $scope.cityWeather = [];
+    $scope.cityForecast = [];
+    $scope.error = false;
 
     
     var displayWeather = function() {
@@ -24,48 +26,49 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
     var displayFurtherInformationsWeather = function() {
         var deg = $scope.cityWeather.wind.deg;
         $('#modalWeatherForCity').modal('hide');
-        $('#windDirection').css({
-            '-ms-transform': 'rotate('+deg+'deg)',
-            '-webkit-transform': 'rotate('+deg+'deg)',
-            '-transform': 'rotate('+deg+'deg)' 
-        });
         $('#modalWeatherFurtherInformations').modal('show');
     }
 	
     
     $scope.getWeatherForCity = function(city){
-        console.log(city);
         $http.get('http://api.openweathermap.org/data/2.5/weather?q='+city)
             .success(function(data){
                  $scope.cityWeather = data;
-                 displayWeather();
+                 if($scope.cityWeather.cod == "404") {
+                    $scope.error = true;
+                    $timeout(function(){
+                         $scope.error = false;
+                     }, 5000);
+                 }
+                 else {   
+                    displayWeather();
+                 }
         })
             .error(function(data){
                 //GERER L'ERREUR ???
                  $scope.cityWeather = data;
-        })
+        });
     };
 	
-	$scope.getWeatherForCityTyped = function(){
-		var city;
-		$timeout(function(){
-			city = document.getElementById("cityAutocomplete").value;
-			$scope.getWeatherForCity(city);
-		}, 3);
-	}
+    $scope.getWeatherForCityTyped = function(){
+            var city;
+            $timeout(function(){
+                    city = document.getElementById("cityAutocomplete").value;
+                    $scope.getWeatherForCity(city);
+            }, 3);
+    };
 
     $scope.furtherInformations = function(city){
-        console.log(city);
-        $http.get('http://api.openweathermap.org/data/2.5/weather?q='+city)
+        $http.get('http://api.openweathermap.org/data/2.5/forecast?q='+city)
             .success(function(data){
-                 $scope.cityWeather = data;   
+                 $scope.cityForecast = data;   
                  displayFurtherInformationsWeather();
         })
             .error(function(data){
                 //GERER L'ERREUR ???
-                 $scope.cityWeather = data;
-        })
-    }
+                 $scope.cityForecast = data;
+        });
+    };
 	
     
     $scope.toCelsius = function(temp) {
