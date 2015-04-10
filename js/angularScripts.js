@@ -61,8 +61,16 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
     $scope.furtherInformations = function(city){
         $http.get('http://api.openweathermap.org/data/2.5/forecast?q='+city)
             .success(function(data){
-                 $scope.cityForecast = data;   
+                 $scope.cityForecast = data; 
+                 if($scope.cityForecast.cod == "404") {
+                    $scope.error = true;
+                    $timeout(function(){
+                         $scope.error = false;
+                     }, 5000);
+                 }
+                 else {
                  displayFurtherInformationsWeather();
+                 }
         })
             .error(function(data){
                 //GERER L'ERREUR ???
