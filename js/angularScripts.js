@@ -11,6 +11,7 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
     $scope.cityWeather = [];
     $scope.cityForecast = [];
     $scope.error = false;
+    $scope.loading = false;
 
     
     var displayWeather = function() {
@@ -31,6 +32,7 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
 	
     
     $scope.getWeatherForCity = function(city){
+        $scope.loading = true;
         $http.get('http://api.openweathermap.org/data/2.5/weather?q='+city)
             .success(function(data){
                  $scope.cityWeather = data;
@@ -43,10 +45,13 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
                  else {   
                     displayWeather();
                  }
+                 $scope.loading = false;
         })
             .error(function(data){
                 //GERER L'ERREUR ???
                  $scope.cityWeather = data;
+                 $scope.loading = false;
+                 
         });
     };
 	
@@ -59,6 +64,7 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
     };
 
     $scope.furtherInformations = function(city){
+        $scope.loading = true;
         $http.get('http://api.openweathermap.org/data/2.5/forecast?q='+city)
             .success(function(data){
                  $scope.cityForecast = data; 
@@ -71,10 +77,12 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
                  else {
                  displayFurtherInformationsWeather();
                  }
+                 $scope.loading = false;
         })
             .error(function(data){
                 //GERER L'ERREUR ???
                  $scope.cityForecast = data;
+                 $scope.loading = false;
         });
     };
 	
