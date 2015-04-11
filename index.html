@@ -59,7 +59,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">{{cityWeather.name}}</h4>
+        <h4 class="modal-title" id="myModalLabel">{{cityWeather.name}} - {{cityWeather.sys. country}}</h4>
       </div>
       <div class="modal-body">
           <div class="row">
@@ -81,7 +81,7 @@
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-info moreInfo" ng-click="furtherInformations(cityWeather.name);">More Info about {{cityWeather.name}}</button>
+        <button type="button" class="btn btn-info moreInfo" ng-click="furtherInformations();">More Info about {{cityWeather.name}}</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -94,25 +94,38 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">{{cityForecast.name}}</h4>
+        <h4 class="modal-title" id="myModalLabel">{{cityForecast.city.name}} - {{cityForecast.city.country}}</h4>
       </div>
       <div class="modal-body">
           <div class="row">
+              <div class="col-lg-4" id="today">
+                <div class="row">
+                  <h3>Aujourd'hui</h3>
+                </div>
+                <div class="row">
+                  <div class="col-lg-4">
+                    <img ng-src="http://openweathermap.org/img/w/{{cityWeather.weather[0].icon}}.png">
+                  </div>
+                  <div class="col-lg-4">
+                    Salut
+                  </div>
+                  <div class="col-lg-4">
+                    Salut
+                  </div>
+                </div>
+              </div>
               <div class="col-lg-2">
-                <img ng-src="http://openweathermap.org/img/w/{{cityForecast.weather[0].icon}}.png"  /> 
-              </div>
-              <div class="col-lg-4">
-                    {{cityForecast.weather[0].description}}
-              </div>
-              <div class="col-lg-4">
-                  Wind force : {{toKMH(cityForecast.wind.speed);}} km/h 
+                Yo
               </div>
               <div class="col-lg-2">
-                  <img id="windDirection" src="images/wind.png" />
+                Yo
               </div>
-          </div>
-          <div class="row">
-              Temperature : {{toCelsius(cityForecast.main.temp);}} °C
+              <div class="col-lg-2">
+                Yo
+              </div>
+              <div class="col-lg-2">
+                Yo  
+              </div>
           </div>
       </div>
       <div class="modal-footer">

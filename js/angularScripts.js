@@ -63,10 +63,13 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
             }, 3);
     };
 
-    $scope.furtherInformations = function(city){
-        $scope.loading = true;
-        $http.get('http://api.openweathermap.org/data/2.5/forecast?q='+city)
+
+    $scope.furtherInformations = function(){
+
+        $http.get('http://api.openweathermap.org/data/2.5/forecast?q='+$scope.cityWeather.name+','+$scope.cityWeather.sys.country)
             .success(function(data){
+                console.log($scope.cityWeather.name);
+                console.log($scope.cityWeather.sys.country);
                  $scope.cityForecast = data; 
                  if($scope.cityForecast.cod == "404") {
                     $scope.error = true;
