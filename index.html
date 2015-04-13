@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
-    
+    <script src="js/Chart.js"></script>
 </head>
 
 <body ng-controller="MapController">
@@ -107,25 +107,73 @@
                     <img ng-src="http://openweathermap.org/img/w/{{cityWeather.weather[0].icon}}.png">
                   </div>
                   <div class="col-lg-4">
-                    Salut
+                    {{toCelsius(cityForecast.list[0].main.temp);}} °C
                   </div>
                   <div class="col-lg-4">
-                    Salut
+                    {{toKMH(cityForecast.list[0].wind.speed);}} km/h 
+                  </div>
+                </div>
+              </div> <!-- today --> 
+              <div class="col-lg-2 furtherDay" id="nextDay">
+                <div class="row">
+                  <h4>Mar</h4>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <img ng-src="http://openweathermap.org/img/w/{{cityForecast.list[0].weather[0].icon}}.png">
+                  </div>
+                  <div class="col-lg-6">
+                    <p class="temperature">{{toCelsius(cityForecast.list[0].main.temp);}} °C</p>
                   </div>
                 </div>
               </div>
-              <div class="col-lg-2">
-                Yo
+              <div class="col-lg-2 furtherDay">
+                <div class="row">
+                  <h4>Mer</h4>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <img ng-src="http://openweathermap.org/img/w/{{cityForecast.list[0].weather[0].icon}}.png">
+                  </div>
+                  <div class="col-lg-6">
+                    <p class="temperature">{{toCelsius(cityForecast.list[0].main.temp);}} °C</p>
+                  </div>
+                </div>
               </div>
-              <div class="col-lg-2">
-                Yo
+              <div class="col-lg-2 furtherDay">
+                <div class="row">
+                  <h4>Jeu</h4>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <img ng-src="http://openweathermap.org/img/w/{{cityForecast.list[0].weather[0].icon}}.png">
+                  </div>
+                  <div class="col-lg-6">
+                    <p class="temperature">{{toCelsius(cityForecast.list[0].main.temp);}} °C</p>
+                  </div>
+                </div>
               </div>
-              <div class="col-lg-2">
-                Yo
+              <div class="col-lg-2 furtherDay">
+                <div class="row">
+                  <h4>Ven</h4>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <img ng-src="http://openweathermap.org/img/w/{{cityForecast.list[0].weather[0].icon}}.png">
+                  </div>
+                  <div class="col-lg-6">
+                    <p class="temperature">{{toCelsius(cityForecast.list[0].main.temp);}} °C</p>
+                  </div>
+                </div>  
               </div>
-              <div class="col-lg-2">
-                Yo  
-              </div>
+          </div>
+          <div class="row" id="graphs">
+            <div class="col-lg-6">
+              <canvas id="graphTmp" class="canvas"></canvas>
+            </div>
+            <div class="col-lg-6">
+              <canvas id="graph" class="canvas"></canvas>
+            </div>
           </div>
       </div>
       <div class="modal-footer">

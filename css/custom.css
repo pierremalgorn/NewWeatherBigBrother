@@ -150,8 +150,33 @@ body {
         }
     }
 
-#today{
+#modalWeatherFurtherInformations{
     text-align: center;
-    border-bottom:  : 2px solid #808080;
+    border-bottom:  : 2px solid #B6AFAF;
+}
+
+#graphs{
+    margin-top: 50px;
+}
+
+#today{
+    border-right: 1px solid #B6AFAF;
+    border-bottom: 1px solid #B6AFAF;
+    border-radius: 5px;
+}
+
+.furtherDay{
+    border-left: 1px solid #B6AFAF; 
+    border-bottom: 1px solid #B6AFAF;
+    border-radius: 5px;
+}
+
+#nextDay{
+    border-left: 0px solid #B6AFAF; 
+}
+
+.temperature{
+    font-size: 12px;
+    margin-top: 13px;
 }
 

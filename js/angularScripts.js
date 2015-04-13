@@ -28,6 +28,46 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         var deg = $scope.cityWeather.wind.deg;
         $('#modalWeatherForCity').modal('hide');
         $('#modalWeatherFurtherInformations').modal('show');
+
+        var buyerDataTemps = {
+                    
+        //The labels will be the dates in the first row of the table
+            labels : ['lundi', 'mardi','mercredi'],
+            datasets : [
+                {
+                fillColor : "rgba(255,102,0, 0.4)",
+                strokeColor : "#33CC66",
+                pointColor : "#fff",
+                pointStrokeColor : "#999999",
+                //The datas will be the different rows of the table
+                data : [20, 12, 50]
+                }
+            ]
+        }
+    
+        // We draw the chart            
+        var sizeChartTmp = document.getElementById('graphTmp').getContext('2d');
+        new Chart(sizeChartTmp).Line(buyerDataTemps);
+
+         var buyerData = {
+                    
+        //The labels will be the dates in the first row of the table
+            labels : ['lundi', 'mardi'],
+            datasets : [
+                {
+                fillColor : "rgba(255,102,0, 0.4)",
+                strokeColor : "#33CC66",
+                pointColor : "#fff",
+                pointStrokeColor : "#999999",
+                //The datas will be the different rows of the table
+                data : [20, 12]
+                }
+            ]
+        }
+    
+        // We draw the chart            
+        var size_chart = document.getElementById('graph').getContext('2d');
+        new Chart(size_chart).Line(buyerData);
     }
 	
     
