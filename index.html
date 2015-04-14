@@ -100,17 +100,17 @@
           <div class="row">
               <div class="col-lg-4" id="today">
                 <div class="row">
-                  <h3>Aujourd'hui</h3>
+                  <h3>Actuellement</h3>
                 </div>
                 <div class="row">
                   <div class="col-lg-4">
-                    <img ng-src="http://openweathermap.org/img/w/{{cityWeather.weather[0].icon}}.png">
+                    <img ng-src="http://openweathermap.org/img/w/{{cityWeather.weather[0].icon}}.png"  />
                   </div>
                   <div class="col-lg-4">
-                    {{toCelsius(cityForecast.list[0].main.temp);}} °C
+                    {{toCelsius(cityWeather.main.temp);}} °C
                   </div>
                   <div class="col-lg-4">
-                    {{toKMH(cityForecast.list[0].wind.speed);}} km/h 
+                    {{toKMH(cityWeather.wind.speed);}} km/h 
                   </div>
                 </div>
               </div> <!-- today --> 
@@ -123,7 +123,7 @@
                     <img ng-src="http://openweathermap.org/img/w/{{cityForecast.list[0].weather[0].icon}}.png">
                   </div>
                   <div class="col-lg-6">
-                    <p class="temperature">{{toCelsius(cityForecast.list[0].main.temp);}} °C</p>
+                    <p class="temperature">{{furtherTemperature(1);}}</p>
                   </div>
                 </div>
               </div>
@@ -136,7 +136,7 @@
                     <img ng-src="http://openweathermap.org/img/w/{{cityForecast.list[0].weather[0].icon}}.png">
                   </div>
                   <div class="col-lg-6">
-                    <p class="temperature">{{toCelsius(cityForecast.list[0].main.temp);}} °C</p>
+                    <p class="temperature">{{furtherTemperature(2);}}</p>
                   </div>
                 </div>
               </div>
@@ -149,7 +149,7 @@
                     <img ng-src="http://openweathermap.org/img/w/{{cityForecast.list[0].weather[0].icon}}.png">
                   </div>
                   <div class="col-lg-6">
-                    <p class="temperature">{{toCelsius(cityForecast.list[0].main.temp);}} °C</p>
+                    <p class="temperature">{{furtherTemperature(3);}}</p>
                   </div>
                 </div>
               </div>
@@ -162,7 +162,7 @@
                     <img ng-src="http://openweathermap.org/img/w/{{cityForecast.list[0].weather[0].icon}}.png">
                   </div>
                   <div class="col-lg-6">
-                    <p class="temperature">{{toCelsius(cityForecast.list[0].main.temp);}} °C</p>
+                    <p class="temperature">{{furtherTemperature(4);}}</p>
                   </div>
                 </div>  
               </div>

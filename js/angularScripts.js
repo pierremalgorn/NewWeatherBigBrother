@@ -68,6 +68,9 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         // We draw the chart            
         var size_chart = document.getElementById('graph').getContext('2d');
         new Chart(size_chart).Line(buyerData);
+
+        var dt = $scope.cityForecast.list[0].dt;
+        console.log(dt);
     }
 	
     
@@ -137,5 +140,40 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
     $scope.toKMH = function(speed) {
         return (speed * 3.6).toFixed(1);
     }
-    
+
+
+    $scope.furtherTemperature = function (num) {
+        var i = 0;
+        var dtMidi = 0;
+        var currentDate = $scope.cityWeather.dt;
+
+        while($scope.cityForecast.list[i].dt_txt.charAt(12) != "2"){
+            i++;
+        }
+
+        dtMidi = $scope.cityForecast.list[i].dt
+        if(dtMidi - currentDate < 3600*12){
+            i = i + 8;
+        }
+
+
+        if(num == 1){
+            return($scope.cityForecast.list[i].main.temp);
+        }
+        
+        if(num == 2){
+            i = i + 8;
+            return($scope.cityForecast.list[i].main.temp);
+        }
+
+        if(num == 3){
+            i = i + 16;
+            return($scope.cityForecast.list[i].main.temp);
+        }
+
+        if(num == 4){
+            i = i + 24;
+            return($scope.cityForecast.list[i].main.temp);
+        }
+    }    
 });
