@@ -29,10 +29,49 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         $('#modalWeatherForCity').modal('hide');
         $('#modalWeatherFurtherInformations').modal('show');
 
+        displayCharts();
+    }
+
+
+    var getFurtherDays = function(){
+
+        var i=0;
+        var tab = new Array();
+        var ladate = new Date();
+        var tab_jour=new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
+
+        for(i=0; i<5; i++){
+            tab.push(tab_jour[((ladate.getDay()) + i)%7]);
+        }
+
+        console.log("tu");
+        return(tab);
+    }
+
+
+    var getFurtherTemperatures = function(){
+        var i = findIndex() - 8;
+        var j=0;
+        var tab = new Array();
+        
+        for(j=0; j<5; j++){
+            tab.push($scope.toCelsius($scope.cityForecast.list[i].main.temp));
+            i = i+8;
+        } 
+
+        return(tab);      
+    }
+
+
+    var displayCharts = function(){
+        
+        var tabDays = getFurtherDays();
+        var tabTemp = getFurtherTemperatures();
+        
         var buyerDataTemps = {
                     
         //The labels will be the dates in the first row of the table
-            labels : ['lundi', 'mardi','mercredi'],
+            labels : tabDays,
             datasets : [
                 {
                 fillColor : "rgba(255,102,0, 0.4)",
@@ -40,7 +79,7 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
                 pointColor : "#fff",
                 pointStrokeColor : "#999999",
                 //The datas will be the different rows of the table
-                data : [20, 12, 50]
+                data : tabTemp
                 }
             ]
         }
@@ -68,10 +107,8 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         // We draw the chart            
         var size_chart = document.getElementById('graph').getContext('2d');
         new Chart(size_chart).Line(buyerData);
-
-        var dt = $scope.cityForecast.list[0].dt;
-        console.log(dt);
     }
+    
 	
     
     $scope.getWeatherForCity = function(city){
