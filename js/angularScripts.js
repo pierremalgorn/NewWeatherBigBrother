@@ -62,11 +62,25 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         return(tab);      
     }
 
+        var getFurtherPressure = function(){
+        var i = findIndex() - 8;
+        var j=0;
+        var tab = new Array();
+        
+        for(j=0; j<5; j++){
+            tab.push(($scope.cityForecast.list[i].main.pressure));
+            i = i+8;
+        } 
+
+        return(tab);      
+    }
+
 
     var displayCharts = function(){
         
         var tabDays = getFurtherDays();
         var tabTemp = getFurtherTemperatures();
+        var tabPressure = getFurtherPressure();
         
         var buyerDataTemps = {
                     
@@ -91,7 +105,7 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
          var buyerData = {
                     
         //The labels will be the dates in the first row of the table
-            labels : ['lundi', 'mardi'],
+            labels : tabDays,
             datasets : [
                 {
                 fillColor : "rgba(255,102,0, 0.4)",
@@ -99,7 +113,7 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
                 pointColor : "#fff",
                 pointStrokeColor : "#999999",
                 //The datas will be the different rows of the table
-                data : [20, 12]
+                data : tabPressure
                 }
             ]
         }
