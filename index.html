@@ -116,53 +116,57 @@
               </div> <!-- today --> 
               <div class="col-lg-2 furtherDay" id="nextDay">
                 <div class="row">
-                  <h4>Mar</h4>
+                  <h4>{{furtherDate(1);}}</h4>
                 </div>
                 <div class="row">
                   <div class="col-lg-6">
-                    <img ng-src="http://openweathermap.org/img/w/{{cityForecast.list[0].weather[0].icon}}.png">
+                    <img id="Img1" src="#">
+                    {{furtherIcon(1);}}
                   </div>
                   <div class="col-lg-6">
-                    <p class="temperature">{{furtherTemperature(1);}}</p>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-2 furtherDay">
-                <div class="row">
-                  <h4>Mer</h4>
-                </div>
-                <div class="row">
-                  <div class="col-lg-6">
-                    <img ng-src="http://openweathermap.org/img/w/{{cityForecast.list[0].weather[0].icon}}.png">
-                  </div>
-                  <div class="col-lg-6">
-                    <p class="temperature">{{furtherTemperature(2);}}</p>
+                    <p class="temperature">{{furtherTemperature(1);}} °C</p>
                   </div>
                 </div>
               </div>
               <div class="col-lg-2 furtherDay">
                 <div class="row">
-                  <h4>Jeu</h4>
+                  <h4>{{furtherDate(2);}}</h4>
                 </div>
                 <div class="row">
                   <div class="col-lg-6">
-                    <img ng-src="http://openweathermap.org/img/w/{{cityForecast.list[0].weather[0].icon}}.png">
+                    <img id="Img2" src="#">
+                    {{furtherIcon(2);}}
                   </div>
                   <div class="col-lg-6">
-                    <p class="temperature">{{furtherTemperature(3);}}</p>
+                    <p class="temperature">{{furtherTemperature(2);}} °C</p>
                   </div>
                 </div>
               </div>
               <div class="col-lg-2 furtherDay">
                 <div class="row">
-                  <h4>Ven</h4>
+                  <h4>{{furtherDate(3);}}</h4>
                 </div>
                 <div class="row">
                   <div class="col-lg-6">
-                    <img ng-src="http://openweathermap.org/img/w/{{cityForecast.list[0].weather[0].icon}}.png">
+                    <img id="Img3" src="#">
+                    {{furtherIcon(3);}}
                   </div>
                   <div class="col-lg-6">
-                    <p class="temperature">{{furtherTemperature(4);}}</p>
+                    <p class="temperature">{{furtherTemperature(3);}} °C</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-2 furtherDay">
+                <div class="row">
+                  <h4>{{furtherDate(4);}}</h4>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <img id="Img4" src="#">
+                    {{furtherIcon(4);}}
+                  </div>
+                  <div class="col-lg-6">
+                    <p class="temperature">{{furtherTemperature(4);}} °C</p>
                   </div>
                 </div>  
               </div>

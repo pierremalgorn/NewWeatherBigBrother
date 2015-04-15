@@ -141,13 +141,12 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         return (speed * 3.6).toFixed(1);
     }
 
-
-    $scope.furtherTemperature = function (num) {
+    var findIndex = function(){
         var i = 0;
         var dtMidi = 0;
-        var currentDate = $scope.cityWeather.dt;
+        var currentDate = $scope.cityWeather.dt;    
 
-        while($scope.cityForecast.list[i].dt_txt.charAt(12) != "2"){
+        while($scope.cityForecast.list[i].dt_txt.charAt(12) != "5"){
             i++;
         }
 
@@ -156,24 +155,93 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
             i = i + 8;
         }
 
+        return(i);
+    }
+
+
+
+    $scope.furtherTemperature = function (num) {
+        
+        var i = findIndex();
 
         if(num == 1){
-            return($scope.cityForecast.list[i].main.temp);
+            var temp = $scope.cityForecast.list[i].main.temp;
+            return($scope.toCelsius(temp));
         }
         
         if(num == 2){
             i = i + 8;
-            return($scope.cityForecast.list[i].main.temp);
+            var temp = $scope.cityForecast.list[i].main.temp;
+            return($scope.toCelsius(temp));
         }
 
         if(num == 3){
             i = i + 16;
-            return($scope.cityForecast.list[i].main.temp);
+            var temp = $scope.cityForecast.list[i].main.temp;
+            return($scope.toCelsius(temp));
         }
 
         if(num == 4){
             i = i + 24;
-            return($scope.cityForecast.list[i].main.temp);
+            var temp = $scope.cityForecast.list[i].main.temp;
+            return($scope.toCelsius(temp));
         }
-    }    
+    }
+
+    $scope.furtherIcon = function(num){
+
+        var i = findIndex();
+        
+        if(num == 2){
+            i = i + 8;
+        }
+
+        if(num == 3){
+            i = i + 16;
+        }
+
+        if(num == 4){
+            i = i + 24;
+        }
+        var idImage = $scope.cityForecast.list[i].weather[0].icon;
+        var path = 'http://openweathermap.org/img/w/'+idImage+'.png';
+
+        if(num == 1){
+            document.getElementById('Img1').src = path;
+        }
+        if(num == 2){
+            document.getElementById('Img2').src = path;
+        }
+
+        if(num == 3){
+            document.getElementById('Img3').src = path;
+        }
+
+        if(num == 4){
+            document.getElementById('Img4').src = path;
+        }
+
+    }
+
+
+    $scope.furtherDate = function(num){
+        var ladate = new Date();
+        var tab_jour=new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
+
+        if(num == 1){
+            return (tab_jour[((ladate.getDay()) + 1)%7]);
+        }
+        if(num == 2){
+            return (tab_jour[((ladate.getDay()) + 2)%7]);
+        }
+
+        if(num == 3){
+            return (tab_jour[((ladate.getDay()) + 3)%7]);
+        }
+
+        if(num == 4){
+            return (tab_jour[((ladate.getDay()) + 4)%7]);
+        }
+        
+    }
 });
