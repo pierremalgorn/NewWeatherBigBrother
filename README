@@ -1,0 +1,34 @@
+WeatherBigBrother
+=================
+
+Ce document README décrit l'application web WeatherBigBrother développée par Alexandre RABASSE et Pierre MALGORN, dans le cadre d'un projet de cours de "WebDesign" enseigné par Jason CONARD et Alexandre NUNESSE.
+
+Cette application permet de consulter la météo actuelle (entre autres la température, la vitesse du vent et l'état du ciel) et les tendances prévues pour les jours suivants de toutes les villes du monde répertoriées dans la base de données que nous exploitons.
+Il y a deux façons de consulter ces informations :
+	1- En cliquant sur les points rouges représentant les grandes villes du globe on accède directement aux informations
+	2- En tapant le nom d'une ville dans le champ prévu en haut à droite
+
+Le placement des points rouges ne se fait pas dynamiquement mais a été pré-créé. Ceci est du au fait que nous ne voulions pas implémenter une carte Google Maps, qui ne nous laissait guère de possibilité de personnalisation de celle-ci.
+
+Cette application s'appuie sur deux APIs disponibles gratuitement en ligne pour afficher ses données :
+	1- Openweather API : données météorologiques en temps réel 
+	2- API Google Maps : aide pour l'utilisateur à la recherche des villes dans le monde, les données en sortie sont utilisées lors de l'appel de l'API Openweather.
+Ces deux APIs sont appelées automatiquement lorsque l'utilisateur souhaite consulter des données.
+
+Durant le développement, nous nous sommes efforcés d'utiliser au maximum les fonctionnalités d'AngularJS.
+Nous avons aussi pu développer en Javascript pur, et exploiter jQuery.
+
+Les directives AngularJS que nous avons utilisées sont les suivantes :
+	ngCloak
+	ngIf
+	ngBlur
+	ngRepeat
+	ngClick
+	ngSrc
+
+Le site web a été construit "from scratch" avec l'aide du framework Bootstrap, nous ne nous sommes donc pas appuyés sur un template pré-créé pour créer notre design.
+Le script "slider" afin de changer de page en cliquant sur les boutons dans la barre de navigation a lui aussi été "fait maison".
+
+Nous avons taché de gérer les erreurs de communication avec les API ou les problèmes de villes introuvables, nous avons aussi implémenté une animation de chargement, afin de faire patienter le visiteur en cas d'attente de connexion à l'API.
+
+Nous vous souhaitons une bonne visite !

@@ -29,7 +29,7 @@
         	</div>
             <div class="collapse navbar-collapse" id="navbar-1">	
                 <ul class="nav navbar-nav">
-                    <li data-slider="0" class="active"><a href=#><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                    <li data-slider="0" class="active"><a href=#><span class="glyphicon glyphicon-home"></span> Accueil</a></li>
                     <li data-slider="1"><a href=#><span class="glyphicon glyphicon-thumbs-up"></span> About Us</a></li>
                     <li data-slider="2"><a href=#><span class="glyphicon glyphicon-envelope"></span> Contact</a></li>
                 </ul>
@@ -46,11 +46,30 @@
     <div id="slider">        
         <div class="pageSlide" id="baseCarte">
             <div id="cityNotFound" class="alert alert-warning ng-cloak" role="alert" ng-if="error">
-                Error : The city hasn't been found in our database...
+                Erreur : La ville est introuvable dans notre base de données...
             </div>
             <img src ="images/MAPOK.jpg" />
             <div ng-repeat="point in points" ng-click="getWeatherForCity(point.city);" class="pointVille" style="top: {{point.top}}%; left: {{point.left}}%;"></div>
         </div>
+        
+        <div class="pageSlide">
+            <div class="col-md-offset-1 col-md-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Liste des villes présentes sur la carte
+                    </div>
+                    <table class="table">
+                        <tr>
+                            <th>Ville</th>
+                        </tr>
+                        <tr ng-repeat="point in points" >
+                            <td>{{point.city}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
     </div>
     
 <!-- Modal general informations -->
@@ -61,7 +80,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">{{cityWeather.name}} - {{cityWeather.sys. country}}</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" ng-if="cityWeather.weather[0].description !== undefined">
           <div class="row">
               <div class="col-lg-2">
                 <img ng-src="http://openweathermap.org/img/w/{{cityWeather.weather[0].icon}}.png"  /> 
@@ -96,7 +115,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">{{cityForecast.city.name}} - {{cityForecast.city.country}}</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body"ng-if="cityForecast.city.name !== undefined">
           <div class="row">
               <div class="col-lg-4" id="today">
                 <div class="row">

@@ -25,7 +25,6 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
     }
 
     var displayFurtherInformationsWeather = function() {
-        var deg = $scope.cityWeather.wind.deg;
         $('#modalWeatherForCity').modal('hide');
         $('#modalWeatherFurtherInformations').modal('show');
 
@@ -190,24 +189,24 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
     
     $scope.toKMH = function(speed) {
         return (speed * 3.6).toFixed(1);
-    }
+    };
 
     var findIndex = function(){
         var i = 0;
         var dtMidi = 0;
         var currentDate = $scope.cityWeather.dt;    
 
-        while($scope.cityForecast.list[i].dt_txt.charAt(12) != "5"){
+        while($scope.cityForecast.list[i].dt_txt.charAt(12) !== "5"){
             i++;
         }
 
-        dtMidi = $scope.cityForecast.list[i].dt
+        dtMidi = $scope.cityForecast.list[i].dt;
         if(dtMidi - currentDate < 3600*12){
             i = i + 8;
         }
 
         return(i);
-    }
+    };
 
 
 
