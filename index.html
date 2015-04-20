@@ -6,6 +6,7 @@
     <title>NewWeatherBigBrother</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
     <script src="js/Chart.js"></script>
 </head>
@@ -53,6 +54,18 @@
         </div>
         
         <div class="pageSlide">
+            
+            <div class="col-md-offset-5 col-md-3">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Recherchez une ville ...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                  </span>
+                </div><!-- /input-group -->
+            </div>
+            
             <div class="col-md-offset-1 col-md-10">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -60,9 +73,12 @@
                     </div>
                     <table class="table">
                         <tr>
-                            <th>Ville</th>
+                            <th ng-click="selectOrderingField('city')">
+                                Ville
+                                <i class="fa" ng-class="{'fa-chevron-up': ordering.reverse, 'fa-chevron-down': !ordering.reverse}" ng-if="ordering.field === 'city'"></i>
+                            </th>
                         </tr>
-                        <tr ng-repeat="point in points" >
+                        <tr ng-repeat="point in points | orderBy: ordering.field : ordering.reverse" >
                             <td>{{point.city}}</td>
                         </tr>
                     </table>
@@ -230,5 +246,6 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <script src="js/custom.js"></script>
 <script src="js/angularScripts.js"></script>
+<script src="js/angularServices.js"></script>
 
 </html>
