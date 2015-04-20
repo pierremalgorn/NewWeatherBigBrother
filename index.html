@@ -68,11 +68,12 @@
                     </table>
                 </div>
             </div>
-        </div>
-        
+        </div>   
     </div>
+
     
 <!-- Modal general informations -->
+
 <div class="modal fade" id="modalWeatherForCity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -80,23 +81,29 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">{{cityWeather.name}} - {{cityWeather.sys. country}}</h4>
       </div>
-      <div class="modal-body" ng-if="cityWeather.weather[0].description !== undefined">
+      <div class="modal-body">
           <div class="row">
-              <div class="col-lg-2">
-                <img ng-src="http://openweathermap.org/img/w/{{cityWeather.weather[0].icon}}.png"  /> 
+              <div class="col-lg-4">
+                <div class="row">
+                  <img ng-src="http://openweathermap.org/img/w/{{cityWeather.weather[0].icon}}.png"  /> 
+                </div>
+                <div class="row">
+                  {{cityWeather.weather[0].description}}
+                </div>
               </div>
               <div class="col-lg-4">
-                    {{cityWeather.weather[0].description}}
+                {{toCelsius(cityWeather.main.temp);}} °C
               </div>
               <div class="col-lg-4">
-                  Wind force : {{toKMH(cityWeather.wind.speed);}} km/h 
-              </div>
-              <div class="col-lg-2">
-                  <img id="windDirection" src="images/wind.png" />
-              </div>
+                <img id="windDirection" src="images/wind.png" />
+                {{toKMH(cityWeather.wind.speed);}} km/h 
+              </div>    
+          </div>
+          <div class="row" id="divGraphNextHours">
+            Températures à venir (°C)
           </div>
           <div class="row">
-              Temperature : {{toCelsius(cityWeather.main.temp);}} °C
+            <canvas id="graphNextHours" class="canvas"></canvas>
           </div>
       </div>
       <div class="modal-footer">
@@ -108,6 +115,7 @@
 </div>
 
 <!-- Modal further informations-->
+<!--
 <div class="modal fade" id="modalWeatherFurtherInformations" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -115,7 +123,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">{{cityForecast.city.name}} - {{cityForecast.city.country}}</h4>
       </div>
-      <div class="modal-body"ng-if="cityForecast.city.name !== undefined">
+      <div class="modal-body">
           <div class="row">
               <div class="col-lg-4" id="today">
                 <div class="row">
@@ -133,7 +141,7 @@
                   </div>
                 </div>
               </div> <!-- today --> 
-              <div class="col-lg-2 furtherDay" id="nextDay">
+             <!-- <div class="col-lg-2 furtherDay" id="nextDay">
                 <div class="row">
                   <h4>{{furtherDate(1);}}</h4>
                 </div>
@@ -210,7 +218,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
     
 
 </body>
