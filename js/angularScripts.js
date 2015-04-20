@@ -43,6 +43,8 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
     $scope.cityForecast = [];
     $scope.error = false;
     $scope.loading = false;
+    $scope.futherDays = [];
+    $scope.furtherTemp = [];
     
     $scope.ordering = {
         'field' : 'city',
@@ -71,10 +73,9 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         var deg = $scope.cityWeather.wind.deg;
         $('#windDirection').css({
             '-ms-transform': 'rotate('+deg+'deg)',
-            '-webkit-transform': 'rotate('+deg+'deg)',
+            '-webkit-g.transform': 'rotate('+deg+'deg)',
             '-transform': 'rotate('+deg+'deg)' 
         });
-
         $scope.graphNextHours();
         $('#modalWeatherForCity').modal('show');
     }
@@ -116,16 +117,7 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
     }
 
 
-
-    var displayFurtherInformationsWeather = function() {
-        $('#modalWeatherForCity').modal('hide');
-        $('#modalWeatherFurtherInformations').modal('show');
-
-        displayCharts();
-    }
-
-
-    var getFurtherDays = function(){
+    $scope.getFurtherDays = function(){
 
         var i=0;
         var tab = new Array();
@@ -136,13 +128,13 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
             tab.push(tab_jour[((ladate.getDay()) + i)%7]);
         }
 
-        console.log("tu");
         return(tab);
     }
 
 
-    var getFurtherTemperatures = function(){
-        var i = findIndex() - 8;
+    $scope.getFurtherTemperatures = function(){
+        var i = findIndex();
+        console.log(i);
         var j=0;
         var tab = new Array();
         
@@ -154,8 +146,8 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         return(tab);      
     }
 
-        var getFurtherPressure = function(){
-        var i = findIndex() - 8;
+    $scope.getFurtherPressure = function(){
+        var i = findIndex();
         var j=0;
         var tab = new Array();
         
@@ -168,11 +160,11 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
     }
 
 
-    var displayCharts = function(){
+    $scope.displayCharts = function(){
         
-        var tabDays = getFurtherDays();
-        var tabTemp = getFurtherTemperatures();
-        var tabPressure = getFurtherPressure();
+        var tabDays = $scope.getFurtherDays();
+        var tabTemp = $scope.getFurtherTemperatures();
+        var tabPressure = $scope.getFurtherPressure();
         
         var buyerDataTemps = {
                     
@@ -220,9 +212,9 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         $scope.loading = true; //On affiche le loading
         var promise = weatherapi.getAll(city); //On appelle l'API
         //On attend la fin de la requête en traitant la promesse
-        promise.then(function(weatherData, forecastData) { //OK
-            $scope.cityWeather = weatherData;
-            $scope.cityForecast = forecastData;
+        promise.then(function(dataWeather) { //OK
+            $scope.cityWeather = dataWeather[0];
+            $scope.cityForecast = dataWeather[1];
             $scope.displayWeather();
         }, function(errorLevel) { //Erreur
             if(errorLevel === 0) {
@@ -268,89 +260,64 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
     };
 
 
+    $scope.furtherInformations = function(){
+        $('#modalWeatherForCity').modal('hide');
+        $('#modalWeatherFurtherInformations').modal('show');
+
+        $scope.furtherDays = $scope.furtherDate();
+        $scope.furtherTemp = $scope.furtherTemperature();
+        $scope.furtherIcon();
+
+        $scope.displayCharts();
+    }
+
 
     $scope.furtherTemperature = function (num) {
-        
+        var tab = new Array();
         var i = findIndex();
+        var j = 0;
 
-        if(num == 1){
-            var temp = $scope.cityForecast.list[i].main.temp;
-            return($scope.toCelsius(temp));
-        }
-        
-        if(num == 2){
-            i = i + 8;
-            var temp = $scope.cityForecast.list[i].main.temp;
-            return($scope.toCelsius(temp));
+        for(j=0; j<4; j++){
+            tab.push($scope.toCelsius($scope.cityForecast.list[i].main.temp));
+            i = i+8;
         }
 
-        if(num == 3){
-            i = i + 16;
-            var temp = $scope.cityForecast.list[i].main.temp;
-            return($scope.toCelsius(temp));
-        }
-
-        if(num == 4){
-            i = i + 24;
-            var temp = $scope.cityForecast.list[i].main.temp;
-            return($scope.toCelsius(temp));
-        }
+        return(tab);
     }
 
     $scope.furtherIcon = function(num){
-
+        var tab = new Array();
         var i = findIndex();
-        
-        if(num == 2){
+        var j=0;
+
+        for(j=0;j<4;j++){
+            tab.push($scope.cityForecast.list[i].weather[0].icon);
             i = i + 8;
         }
 
-        if(num == 3){
-            i = i + 16;
-        }
-
-        if(num == 4){
-            i = i + 24;
-        }
-        var idImage = $scope.cityForecast.list[i].weather[0].icon;
-        var path = 'http://openweathermap.org/img/w/'+idImage+'.png';
-
-        if(num == 1){
-            document.getElementById('Img1').src = path;
-        }
-        if(num == 2){
-            document.getElementById('Img2').src = path;
-        }
-
-        if(num == 3){
-            document.getElementById('Img3').src = path;
-        }
-
-        if(num == 4){
-            document.getElementById('Img4').src = path;
-        }
-
+        var path1 = 'http://openweathermap.org/img/w/'+tab[0]+'.png';
+        document.getElementById('Img1').src = path1;
+        var path2 = 'http://openweathermap.org/img/w/'+tab[1]+'.png';
+        document.getElementById('Img2').src = path2;
+        var path3 = 'http://openweathermap.org/img/w/'+tab[2]+'.png';
+        document.getElementById('Img3').src = path3;
+        var path4 = 'http://openweathermap.org/img/w/'+tab[3]+'.png';
+        document.getElementById('Img4').src = path4;
     }
 
 
     $scope.furtherDate = function(num){
         var ladate = new Date();
         var tab_jour=new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
+        var tab = new Array();
+        var i = 0;
 
-        if(num == 1){
-            return (tab_jour[((ladate.getDay()) + 1)%7]);
-        }
-        if(num == 2){
-            return (tab_jour[((ladate.getDay()) + 2)%7]);
-        }
 
-        if(num == 3){
-            return (tab_jour[((ladate.getDay()) + 3)%7]);
+        for(i=1;i<5;i++){
+            tab.push(tab_jour[((ladate.getDay()) + i)%7]);
         }
 
-        if(num == 4){
-            return (tab_jour[((ladate.getDay()) + 4)%7]);
-        }
+        return (tab);
         
     }
 });

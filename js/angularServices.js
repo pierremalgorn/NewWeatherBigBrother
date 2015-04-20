@@ -4,6 +4,7 @@ WeatherBigBrother.service('weatherapi', function ($http, $q) {
         return $q(function(resolve, reject){
             var weather;
             var forecast;
+            var dataWeather = new Array();
             
             var promiseWeather = getWeather(search);
             var promiseForecast = getForecast(search);
@@ -18,7 +19,9 @@ WeatherBigBrother.service('weatherapi', function ($http, $q) {
             
             //On contrôle les deux promesses
             $q.all([promiseWeather, promiseForecast]).then(function(data) { //OK
-                resolve(data[0], data[1]);
+                dataWeather.push(data[0]);
+                dataWeather.push(data[1]);
+                resolve(dataWeather);
             }, function(){ //ERREURS
                 reject(0);
             }); 
