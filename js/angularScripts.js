@@ -124,7 +124,7 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         var ladate = new Date();
         var tab_jour=new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
 
-        for(i=0; i<5; i++){
+        for(i=1; i<6; i++){
             tab.push(tab_jour[((ladate.getDay()) + i)%7]);
         }
 
