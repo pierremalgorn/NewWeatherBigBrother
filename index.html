@@ -4,18 +4,21 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>NewWeatherBigBrother</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css" /> 
-    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="libs/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="libs/jquery-ui.min.css" /> 
+    <link rel="stylesheet" type="text/css" href="libs/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/custom.css" />
 </head>
 
 <body ng-controller="MapController">
 
+    <!--Loader attente utilisateur-->
     <div id="loader-wrapper" class="ng-cloak" ng-if="loading">
         <div id="loader"></div> 
     </div>
-    
+    <!--! Loader attente utilisateur-->
+
+    <!--Barre de navigation-->
     <nav class="navbar navbar-default">
     	<div class="container-fluid">
         
@@ -31,58 +34,77 @@
                 <ul class="nav navbar-nav">
                     <li data-slider="0" class="active"><a href="#"><i class="fa fa-map-marker"></i> Carte</a></li>
                     <li data-slider="1"><a href="#"><i class="fa fa-list"></i> Liste</a></li>
-                    <li data-slider="2"><a href="#"><span class="glyphicon glyphicon-envelope"></span> Contact</a></li>
+                    <li data-slider="2"><a href="#"><i class="fa fa-code"></i> A propos du projet</a></li>
                 </ul>
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group">
                       <input ng-blur="getWeatherForCityTyped();" id="cityAutocomplete" type="text" placeholder="Ville..." class="form-control" />
                     </div>
                 </form>
-                <div class="row col-sm-12"><div class="active-menu"></div></div>
             </div>    
         </div>
     </nav>
+    <!--!Barre de navigation-->
     
-    <div id="slider">        
-        <div class="pageSlide" id="baseCarte">
-            <div id="cityNotFound" class="alert alert-warning ng-cloak" role="alert" ng-if="error">
-                Erreur : La ville est introuvable dans notre base de données...
-            </div>
-            <img src ="images/MAPOK.jpg" />
-            <div ng-repeat="point in points" ng-click="getWeatherForCity(point.city);" class="pointVille" style="top: {{point.top}}%; left: {{point.left}}%;"></div>
-        </div>
-        
-        <div class="pageSlide">
-            
-            <div class="col-md-offset-5 col-md-2" id="rechercheListe">
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Recherchez une ville ..." ng-model="recherche" >
+    <!--Slider contenu de page-->
+    <div id="wrapperHidden">
+        <div id="slider">
+            <!--Carte du monde-->
+            <div class="pageSlide" id="baseCarte">
+                <div id="cityNotFound" class="alert alert-warning ng-cloak" role="alert" ng-if="error">
+                    Erreur : Le serveur ne répond pas ou la ville est introuvable dans notre base de données...
                 </div>
+                <img src ="images/MAPOK.jpg" />
+                <div ng-repeat="point in points" ng-click="getWeatherForCity(point.city);" class="pointVille" style="top: {{point.top}}%; left: {{point.left}}%;"></div>
             </div>
-            
-            <div class="col-md-offset-1 col-md-10">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Liste des villes présentes sur la carte
+            <!--!Carte du monde-->
+
+            <!--Liste des villes-->
+            <div class="pageSlide">            
+                <div class="col-md-offset-5 col-md-2" id="rechercheListe">
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Recherchez une ville ..." ng-model="recherche" >
                     </div>
-                    <table class="table">
-                        <tr>
-                            <th ng-click="selectOrderingField('city')">
-                                Ville
-                                <i class="fa" ng-class="{'fa-chevron-up': ordering.reverse, 'fa-chevron-down': !ordering.reverse}" ng-if="ordering.field === 'city'"></i>
-                            </th>
-                        </tr>
-                        <tr ng-repeat="point in points | filter: recherche | orderBy: ordering.field : ordering.reverse" >
-                            <td>{{point.city}}</td>
-                        </tr>
-                    </table>
+                </div>
+
+                <div class="col-md-offset-4 col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Liste des villes présentes sur la carte
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <th ng-click="selectOrderingField('city')">
+                                    Ville
+                                    <i class="fa" ng-class="{'fa-chevron-up': ordering.reverse, 'fa-chevron-down': !ordering.reverse}" ng-if="ordering.field === 'city'"></i>
+                                </th>
+                            </tr>
+                            <tr ng-repeat="point in points | filter: recherche | orderBy: ordering.field : ordering.reverse" >
+                                <td>{{point.city}}</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
+            <!--Liste des villes-->
+            
+            <!--A propos-->
+            <div class="pageSlide">
+                <div class="col-md-offset-2 col-md-8">
+                    <h1>WeatherBigBrother <small>: Projet EPF mars-avril 2015</small></h1>
+                    <h3>Développeurs : <small>Alexandre RABASSE et Pierre MALGORN</small></h3><br />
+                    <h5>Vous pouvez consulter le GitHub de ce projet à l'adresse suivante : <a href="https://github.com/pierremalgorn/NewWeatherBigBrother">https://github.com/pierremalgorn/NewWeatherBigBrother</a></h5><br /><br />
+                    <h3 class='text-center'>Merci de votre visite !</h3>
+                </div>
+            </div>
+            <!--!A propos-->
         </div>   
+        <!-- !Slider contenu de page-->
     </div>
+ 
 
     
-<!-- Modal general informations -->
+<!-- Modal weather -->
 
 <div class="modal fade" id="modalWeatherForCity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -124,7 +146,7 @@
   </div>
 </div>
 
-<!-- Modal further informations-->
+<!-- Modal forecast-->
 
 <div class="modal fade" id="modalWeatherFurtherInformations" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
