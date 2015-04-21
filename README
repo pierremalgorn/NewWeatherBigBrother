@@ -1,4 +1,4 @@
-WeatherBigBrother
+﻿WeatherBigBrother
 =================
 
 Ce document README décrit l'application web WeatherBigBrother développée par Alexandre RABASSE et Pierre MALGORN, dans le cadre d'un projet de cours de "WebDesign" enseigné par Jason CONARD et Alexandre NUNESSE.
@@ -7,6 +7,7 @@ Cette application permet de consulter la météo actuelle (entre autres la temp�
 Il y a deux façons de consulter ces informations :
 	1- En cliquant sur les points rouges représentant les grandes villes du globe on accède directement aux informations
 	2- En tapant le nom d'une ville dans le champ prévu en haut à droite
+	3- En cherchant la ville qui nous intéresse dans le tableau regroupant les villes et en cliquant dessus
 
 Le placement des points rouges ne se fait pas dynamiquement mais a été pré-créé. Ceci est du au fait que nous ne voulions pas implémenter une carte Google Maps, qui ne nous laissait guère de possibilité de personnalisation de celle-ci.
 
