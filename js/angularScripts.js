@@ -1,7 +1,7 @@
 var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapController', function($scope, $http, $timeout, weatherapi){
     
-    //Points villes sur la carte
-    $scope.points = [
+    
+    $scope.points = [   //Permet de situer les points sur la carte et de fournir le nom de la ville
         {city:'Paris,fr', top:31.4, left:45.8},
         {city:'Madrid,es', top:36, left:44.14},
         {city:'London,uk', top:28.3, left:45},
@@ -80,29 +80,29 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
             '-webkit-g.transform': 'rotate('+deg+'deg)',
             '-transform': 'rotate('+deg+'deg)' 
         });
-        //On dessine le graphique
-        $scope.graphNextHours();
-        $('#modalWeatherForCity').modal('show');
+
+        $scope.graphNextHours(); //Appelle la fonction pour afficher le graphe qui montre les températures dans les heures à venir
+        $('#modalWeatherForCity').modal('show'); //Affiche la modale
     }
 
     $scope.graphNextHours = function(){
-        var hours = new Array();
-        var temp = new Array();
+        var hours = new Array(); //Récupère les heures
+        var temp = new Array(); //Récupère les températures correspondant aux heures
         var i = 0;
         var j = 0;
 
-        while($scope.cityWeather.dt > $scope.cityForecast.list[i].dt){
+        while($scope.cityWeather.dt > $scope.cityForecast.list[i].dt){  //Permet de récupérer l'index à partir duquel il faut récupérer les heures à venir
             i = i+1;
         }
 
-        for(j=i;j<i+6;j++){
+        for(j=i;j<i+6;j++){ //On récupère les 6 prochaines heures et les 6 prochaines températures dans des tableaux
             hours.push($scope.cityForecast.list[j].dt_txt.charAt(11)+$scope.cityForecast.list[j].dt_txt.charAt(12)+'h');
             temp.push($scope.toCelsius($scope.cityForecast.list[j].main.temp));
         }
 
         var buyerDataTemps = {
                     
-        //The labels will be the dates in the first row of the table
+        //Les labels vont être les heures
             labels : hours,
             datasets : [
                 {
@@ -110,27 +110,27 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
                 strokeColor : "#33CC66",
                 pointColor : "#fff",
                 pointStrokeColor : "#999999",
-                //The datas will be the different rows of the table
+                //Les data vont être les températures
                 data : temp
                 }
             ]
         }
     
-        // We draw the chart            
+        // On affiche le graphique           
         var sizeChartTmp = document.getElementById('graphNextHours').getContext('2d');
         new Chart(sizeChartTmp).Line(buyerDataTemps);
     }
 
 
-    $scope.getFurtherDays = function(){
+    $scope.getFurtherDays = function(){ //On récupère quels sont les prochains jours pour la deuxième modale
 
         var i=0;
         var tab = new Array();
-        var ladate = new Date();
-        var tab_jour=new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
+        var ladate = new Date(); //Permet de récupérer une date
+        var tab_jour=new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"); //La liste des jours de la semaine
 
         for(i=1; i<6; i++){
-            tab.push(tab_jour[((ladate.getDay()) + i)%7]);
+            tab.push(tab_jour[((ladate.getDay()) + i)%7]); //On récupère l'indice du jour actuel puis on récupère les 4 jours suivants dans le tableau tab
         }
 
         return(tab);
