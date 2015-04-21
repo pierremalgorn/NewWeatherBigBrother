@@ -26,6 +26,7 @@ Les directives AngularJS que nous avons utilisées sont les suivantes :
 	ngClick
 	ngSrc
         ngClass
+        ngModel
 
 Nous avons créé un service AngularJS afin de traiter l'appel à l'API Openweather, ses fonctions retournent un callback grâce au service $q, qui nous permet de traiter le temps d'attente en affichant un loader tant que la requête n'a pas été exécutée.
 Nous avons utilisé la fonctionnalité orderBy pour trier la liste des villes. Un champ de recherche propre à cette liste a aussi été implémenté.

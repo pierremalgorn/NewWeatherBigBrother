@@ -1,6 +1,6 @@
 var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapController', function($scope, $http, $timeout, weatherapi){
     
-    
+    //Points villes sur la carte
     $scope.points = [
         {city:'Paris,fr', top:31.4, left:45.8},
         {city:'Madrid,es', top:36, left:44.14},
@@ -46,11 +46,13 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
     $scope.futherDays = [];
     $scope.furtherTemp = [];
     
+    //Données pour le tri sur la liste des villes
     $scope.ordering = {
         'field' : 'city',
         'reverse' : false
     }
     
+    //Au clic sur une colonne, on change de sens de tri ou on change de colonne de tri
     $scope.selectOrderingField = function(column) {
         if($scope.ordering.field === column) {
             $scope.ordering.reverse = !$scope.ordering.reverse;
@@ -61,6 +63,7 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         $scope.ordering.field = column;
     }
     
+    //Affiche un message d'erreur pendant 5 secondes à l'utilisateur
     var displayErrorMessage = function() {
         $scope.error = true;
         $timeout(function(){
@@ -68,14 +71,16 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         }, 5000);
     }
 
-    
+    //Affichage de la première fenêtre modale affichant la météo du jour
     $scope.displayWeather = function() {
         var deg = $scope.cityWeather.wind.deg;
+        //On tourne la flèche de direction de vent en fonction de la donnée
         $('#windDirection').css({
             '-ms-transform': 'rotate('+deg+'deg)',
             '-webkit-g.transform': 'rotate('+deg+'deg)',
             '-transform': 'rotate('+deg+'deg)' 
         });
+        //On dessine le graphique
         $scope.graphNextHours();
         $('#modalWeatherForCity').modal('show');
     }
@@ -134,7 +139,6 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
 
     $scope.getFurtherTemperatures = function(){
         var i = findIndex();
-        console.log(i);
         var j=0;
         var tab = new Array();
         
@@ -207,7 +211,7 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         new Chart(size_chart).Line(buyerData);
     }
 
-
+    //Récupération des données et affichage
     $scope.getWeatherForCity = function(city){
         $scope.loading = true; //On affiche le loading
         var promise = weatherapi.getAll(city); //On appelle l'API
@@ -225,9 +229,10 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         });
     };
 
-	
+    //Affichage de la météo de la ville tapée en recherche
     $scope.getWeatherForCityTyped = function(){
             var city;
+            //On attend 3ms avant de récupérer la donnée sinon problème avec API Google
             $timeout(function(){
                     city = document.getElementById("cityAutocomplete").value;
                     $scope.getWeatherForCity(city);

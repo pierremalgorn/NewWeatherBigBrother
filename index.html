@@ -2,13 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" ng-app="WeatherBigBrother">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>NewWeatherBigBrother</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/custom.css">
-    <script src="js/Chart.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css" /> 
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/custom.css" />
 </head>
 
 <body ng-controller="MapController">
@@ -30,13 +29,13 @@
         	</div>
             <div class="collapse navbar-collapse" id="navbar-1">	
                 <ul class="nav navbar-nav">
-                    <li data-slider="0" class="active"><a href=#><span class="glyphicon glyphicon-home"></span> Accueil</a></li>
-                    <li data-slider="1"><a href=#><span class="glyphicon glyphicon-thumbs-up"></span> About Us</a></li>
-                    <li data-slider="2"><a href=#><span class="glyphicon glyphicon-envelope"></span> Contact</a></li>
+                    <li data-slider="0" class="active"><a href="#"><i class="fa fa-map-marker"></i> Carte</a></li>
+                    <li data-slider="1"><a href="#"><i class="fa fa-list"></i> Liste</a></li>
+                    <li data-slider="2"><a href="#"><span class="glyphicon glyphicon-envelope"></span> Contact</a></li>
                 </ul>
                 <form class="navbar-form navbar-right" role="search">
                     <div class="form-group">
-                      <input ng-blur="getWeatherForCityTyped();" id="cityAutocomplete" type="text" placeholder="Ville..." class="form-control">
+                      <input ng-blur="getWeatherForCityTyped();" id="cityAutocomplete" type="text" placeholder="Ville..." class="form-control" />
                     </div>
                 </form>
                 <div class="row col-sm-12"><div class="active-menu"></div></div>
@@ -55,15 +54,10 @@
         
         <div class="pageSlide">
             
-            <div class="col-md-offset-5 col-md-3">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Recherchez une ville ...">
-                  <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">
-                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    </button>
-                  </span>
-                </div><!-- /input-group -->
+            <div class="col-md-offset-5 col-md-2" id="rechercheListe">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Recherchez une ville ..." ng-model="recherche" >
+                </div>
             </div>
             
             <div class="col-md-offset-1 col-md-10">
@@ -78,7 +72,7 @@
                                 <i class="fa" ng-class="{'fa-chevron-up': ordering.reverse, 'fa-chevron-down': !ordering.reverse}" ng-if="ordering.field === 'city'"></i>
                             </th>
                         </tr>
-                        <tr ng-repeat="point in points | orderBy: ordering.field : ordering.reverse" >
+                        <tr ng-repeat="point in points | filter: recherche | orderBy: ordering.field : ordering.reverse" >
                             <td>{{point.city}}</td>
                         </tr>
                     </table>
@@ -123,7 +117,7 @@
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-info moreInfo" ng-click="furtherInformations();">More Info about {{cityWeather.name}}</button>
+        <button type="button" class="btn btn-info moreInfo" ng-click="furtherInformations();">Prévisions pour {{cityWeather.name}}</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -240,6 +234,7 @@
 <script src="libs/jquery-ui.min.js"></script>
 <script src="libs/bootstrap.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+<script src="js/Chart.js"></script>
 <script src="js/custom.js"></script>
 <script src="js/angularScripts.js"></script>
 <script src="js/angularServices.js"></script>
