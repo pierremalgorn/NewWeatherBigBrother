@@ -50,7 +50,7 @@
     <div id="wrapperHidden">
         <div id="slider">
             <!--Carte du monde-->
-            <div class="pageSlide" id="baseCarte">
+            <div class="pageSlide active" id="baseCarte">
                 <div id="cityNotFound" class="alert alert-warning ng-cloak" role="alert" ng-if="error">
                     Erreur : Le serveur ne répond pas ou la ville est introuvable dans notre base de données...
                 </div>
@@ -79,8 +79,8 @@
                                     <i class="fa" ng-class="{'fa-chevron-up': ordering.reverse, 'fa-chevron-down': !ordering.reverse}" ng-if="ordering.field === 'city'"></i>
                                 </th>
                             </tr>
-                            <tr ng-repeat="point in points | filter: recherche | orderBy: ordering.field : ordering.reverse" >
-                                <td>{{point.city}}</td>
+                            <tr ng-repeat="point in points | filter: recherche | orderBy: ordering.field : ordering.reverse" ng-click="getWeatherForCity(point.city);" >
+                                <td><a href="#">{{point.city}}</a></td>
                             </tr>
                         </table>
                     </div>

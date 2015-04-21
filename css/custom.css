@@ -1,13 +1,36 @@
 @charset "utf-8";
 
 body {
-	font-family: "Titillium Web", sans-serif;
-	font-weight: normal;
-	overflow-x: hidden;
+    font-family: "Titillium Web", sans-serif;
+    font-weight: normal;
+    overflow-x: hidden;
+    padding: 0px;
+    background-color: rgb(0, 3, 18);
+}
+
+h1, h2, h3, h5 {
+    color: rgb(219, 219, 219);
+}
+
+small {
+    color: rgb(131, 131, 131);
+}
+
+.panel {
+    background-color: #CACACA;
+}
+
+.panel-default {
+    border-color: #4D4D4D;
+}
+
+.panel-heading {
+    background-color: #939393;
+    border-color: #807D7D;
 }
 
 .navbar {
-    margin: 0px
+    margin: 5px
 }
 
 .navbar-brand > img {
@@ -25,6 +48,7 @@ body {
 #baseCarte img {
     z-index: 0;
     width: 100%;
+    border-radius: 4px;
 }
 
 .pointVille {
@@ -53,6 +77,7 @@ body {
 
 #slider {
     width:5000px;
+    margin-top: -2px;
 }
 
 #wrapperHidden {
@@ -185,6 +210,11 @@ body {
 
 #divGraphNextHours{
     margin-top: 20px;
+}
+
+.table a {
+  color: black;
+  text-decoration: none; /* no underline */
 }
 
 #rechercheListe {
