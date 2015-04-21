@@ -129,7 +129,7 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         var ladate = new Date(); //Permet de récupérer une date
         var tab_jour=new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"); //La liste des jours de la semaine
 
-        for(i=1; i<6; i++){
+        for(i=1; i<5; i++){
             tab.push(tab_jour[((ladate.getDay()) + i)%7]); //On récupère l'indice du jour actuel puis on récupère les 4 jours suivants dans le tableau tab
         }
 
@@ -137,26 +137,13 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
     }
 
 
-    $scope.getFurtherTemperatures = function(){
+    $scope.getFurtherPressure = function(){ //On récupère les pressions pour les 4 jours à venir
         var i = findIndex();
         var j=0;
         var tab = new Array();
         
-        for(j=0; j<5; j++){
-            tab.push($scope.toCelsius($scope.cityForecast.list[i].main.temp));
-            i = i+8;
-        } 
-
-        return(tab);      
-    }
-
-    $scope.getFurtherPressure = function(){
-        var i = findIndex();
-        var j=0;
-        var tab = new Array();
-        
-        for(j=0; j<5; j++){
-            tab.push(($scope.cityForecast.list[i].main.pressure));
+        for(j=0; j<4; j++){
+            tab.push($scope.cityForecast.list[i].main.pressure); //On stocke dans un tableau les pressions
             i = i+8;
         } 
 
@@ -164,15 +151,15 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
     }
 
 
-    $scope.displayCharts = function(){
+    $scope.displayCharts = function(){ // On affiche les graphiques montrant les températures et pressions pour les 4 jours à venir
         
-        var tabDays = $scope.getFurtherDays();
-        var tabTemp = $scope.getFurtherTemperatures();
+        var tabDays = $scope.furtherDate();
+        var tabTemp = $scope.furtherTemperature();
         var tabPressure = $scope.getFurtherPressure();
         
         var buyerDataTemps = {
                     
-        //The labels will be the dates in the first row of the table
+        //Ici les labels seront les 4 jours à venir
             labels : tabDays,
             datasets : [
                 {
@@ -180,19 +167,19 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
                 strokeColor : "#33CC66",
                 pointColor : "#fff",
                 pointStrokeColor : "#999999",
-                //The datas will be the different rows of the table
+                //Les datas seront les températures pour les 4 jours à venir
                 data : tabTemp
                 }
             ]
         }
     
-        // We draw the chart            
+        // On dessine le graphique dans le canvas prévu à cet effet           
         var sizeChartTmp = document.getElementById('graphTmp').getContext('2d');
         new Chart(sizeChartTmp).Line(buyerDataTemps);
 
          var buyerData = {
                     
-        //The labels will be the dates in the first row of the table
+        //Ici les labels seront les 4 jours à venir
             labels : tabDays,
             datasets : [
                 {
@@ -200,13 +187,13 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
                 strokeColor : "#33CC66",
                 pointColor : "#fff",
                 pointStrokeColor : "#999999",
-                //The datas will be the different rows of the table
+                //Les datas seront les pressions pour les 4 jours à venir
                 data : tabPressure
                 }
             ]
         }
     
-        // We draw the chart            
+        // On dessine le graphique dans le canvas prévu à cet effet            
         var size_chart = document.getElementById('graph').getContext('2d');
         new Chart(size_chart).Line(buyerData);
     }
@@ -239,45 +226,49 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
             }, 3);
     };	
     
-    $scope.toCelsius = function(temp) {
+    $scope.toCelsius = function(temp) { // Les données concernant la température sont fournies en Kelvin, on les passe en °C
         return (temp - 272.15).toFixed(1);
     };
     
-    $scope.toKMH = function(speed) {
+    $scope.toKMH = function(speed) { // Les données concernant la vitesse sont fournies en m/s, on les passe en km/h
         return (speed * 3.6).toFixed(1);
     };
 
-    var findIndex = function(){
+    var findIndex = function(){ // Le but de cette fonction est de trouver l'index des infos du lendemain à 15h
         var i = 0;
         var dtMidi = 0;
-        var currentDate = $scope.cityWeather.dt;    
+        var currentDate = $scope.cityWeather.dt; // On récupère la date à laquelle on est en ce moment   
 
-        while($scope.cityForecast.list[i].dt_txt.charAt(12) !== "5"){
+        while($scope.cityForecast.list[i].dt_txt.charAt(12) !== "5"){ // On cherche les prochaines infos où l'heure est égale à 15h et on récupère l'index
             i++;
         }
 
-        dtMidi = $scope.cityForecast.list[i].dt;
-        if(dtMidi - currentDate < 3600*15){
-            i = i + 8;
+        dtMidi = $scope.cityForecast.list[i].dt; // On récupère la date sous format dataTime pour l'index trouvé
+        if(dtMidi - currentDate < 3600*15){ // On compare avec la date actuelle. Si la date actuelle précède de moins de 15h dtMidi ou si elle est supérieure à
+            i = i + 8;                      // dtMidi, on va chercher les infos du jour suivant.
         }
 
-        return(i);
+        return(i);  // On retourne l'index
     };
 
 
     $scope.furtherInformations = function(){
-        $('#modalWeatherForCity').modal('hide');
-        $('#modalWeatherFurtherInformations').modal('show');
+        $('#modalWeatherForCity').modal('hide'); // On cache la première modale
+        $('#modalWeatherFurtherInformations').modal('show'); // On affiche la deuxième modale
+        $('#graphTmp').remove(); // On détruit le canvas présent pour recharger un tout nouveau graphique
+        $('#divGraphTmp').append('<canvas id="graphTmp"><canvas>'); // On remet un élément canvas là où on avait supprimé l'ancien
+        $('#graph').remove(); 
+        $('#divGraph').append('<canvas id="graph"><canvas>');
 
-        $scope.furtherDays = $scope.furtherDate();
-        $scope.furtherTemp = $scope.furtherTemperature();
+        $scope.furtherDays = $scope.furtherDate();  //On récupère les prochains jours
+        $scope.furtherTemp = $scope.furtherTemperature(); // On récupère les prochaines températures
         $scope.furtherIcon();
 
         $scope.displayCharts();
     }
 
 
-    $scope.furtherTemperature = function (num) {
+    $scope.furtherTemperature = function () {
         var tab = new Array();
         var i = findIndex();
         var j = 0;
@@ -290,7 +281,8 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
         return(tab);
     }
 
-    $scope.furtherIcon = function(num){
+
+    $scope.furtherIcon = function(){
         var tab = new Array();
         var i = findIndex();
         var j=0;
@@ -311,15 +303,15 @@ var WeatherBigBrother = angular.module('WeatherBigBrother', []).controller('MapC
     }
 
 
-    $scope.furtherDate = function(num){
-        var ladate = new Date();
-        var tab_jour=new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
+    $scope.furtherDate = function(){ //On récupère quels sont les prochains jours pour la deuxième modale
+        var ladate = new Date();  //Permet de récupérer une date
+        var tab_jour=new Array("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"); //La liste des jours de la semaine
         var tab = new Array();
         var i = 0;
 
 
         for(i=1;i<5;i++){
-            tab.push(tab_jour[((ladate.getDay()) + i)%7]);
+            tab.push(tab_jour[((ladate.getDay()) + i)%7]); //On récupère l'indice du jour actuel puis on récupère les 4 jours suivants dans le tableau tab
         }
 
         return (tab);
